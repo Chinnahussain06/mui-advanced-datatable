@@ -1,4 +1,4 @@
-# 🛡️ Enterprise MUIData Table Manager (MUI + Tailwind CSS)
+# Enterprise MUIData Table Manager (React | MUI | Typescript | Node.js )
 
 Welcome to the **MUIData Table Manager**—a production-grade, highly reusable, and performant template demonstrating best-practice front-end and back-end integration. Utilizing **React (Vite), TypeScript, Material UI (MUI), Express, and TanStack React Query**, this architecture models professional client-side (automatic) and server-side (manual, cursor-based) pagination workflows.
 
@@ -185,4 +185,3 @@ _Data Seeding Strategy:_ During bootup, the system runs an asynchronous fetch to
   ```bash
   npm run start
   ```
-
