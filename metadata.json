@@ -1,6 +1,4 @@
 {
-  "name": "MUI Pagination and Data Tables Manager",
-  "description": "An interactive playground showcasing automatic and manual pagination data tables using Material UI (MUI), complete with comprehensive data structures, mock integration, and a production-ready README generator.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "name": "MUI Data Table",
+  "description": "Enterprise-grade React + MUI data table system with automatic & server-side pagination, cursor-based navigation, filtering, sorting, CSV export, and TanStack Query integration."
 }

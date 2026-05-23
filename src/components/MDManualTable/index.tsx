@@ -14,7 +14,7 @@ import {
   MenuItem,
   FormControlLabel,
   Box,
-  InputAdornment
+  InputAdornment,
 } from "@mui/material";
 import {
   Loop as LoopIcon,
@@ -22,7 +22,7 @@ import {
   ViewColumn as ViewColumnIcon,
   NavigateBefore as NavigateBeforeIcon,
   NavigateNext as NavigateNextIcon,
-  Search as SearchIcon
+  Search as SearchIcon,
 } from "@mui/icons-material";
 import { ColumnDef, ViewType } from "../../types";
 import { rowsPerPageOptions } from "../../utils/constants";
@@ -40,7 +40,9 @@ type TableProps<T> = {
   onUpdate?: () => void;
   loading?: boolean;
   pagination: { pageIndex: number; pageSize: number };
-  setPagination: React.Dispatch<React.SetStateAction<{ pageIndex: number; pageSize: number }>>;
+  setPagination: React.Dispatch<
+    React.SetStateAction<{ pageIndex: number; pageSize: number }>
+  >;
   hasMoreData?: boolean;
   totalItems?: number;
   columnPinning?: any;
@@ -79,17 +81,23 @@ export const MDManualTable = <T extends { id: string | number }>({
   setColumnFilters,
   columnFilters = "",
   enableDownload = false,
-  wrapInCard = true
+  wrapInCard = true,
 }: TableProps<T>) => {
   // Local menu open triggers
   const [colAnchorEl, setColAnchorEl] = useState<null | HTMLElement>(null);
-  const [columnVisibility, setColumnVisibility] = useState<{ [key: string]: boolean }>(() => {
+  const [columnVisibility, setColumnVisibility] = useState<{
+    [key: string]: boolean;
+  }>(() => {
     const saved = localStorage.getItem(`${localStorageKey}-col-visibility`);
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) { /* ignore */ }
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        /* ignore */
+      }
     }
     const initial: { [key: string]: boolean } = {};
-    columns.forEach(col => {
+    columns.forEach((col) => {
       const key = String(col.accessorKey);
       initial[key] = !hiddenColumns.includes(key);
     });
@@ -98,7 +106,10 @@ export const MDManualTable = <T extends { id: string | number }>({
 
   // Save visibility when changed
   useEffect(() => {
-    localStorage.setItem(`${localStorageKey}-col-visibility`, JSON.stringify(columnVisibility));
+    localStorage.setItem(
+      `${localStorageKey}-col-visibility`,
+      JSON.stringify(columnVisibility),
+    );
   }, [columnVisibility, localStorageKey]);
 
   const handleExportClick = () => {
@@ -106,9 +117,9 @@ export const MDManualTable = <T extends { id: string | number }>({
   };
 
   const handleToggleColumn = (colKey: string) => {
-    setColumnVisibility(prev => ({
+    setColumnVisibility((prev) => ({
       ...prev,
-      [colKey]: !prev[colKey]
+      [colKey]: !prev[colKey],
     }));
   };
 
@@ -118,49 +129,70 @@ export const MDManualTable = <T extends { id: string | number }>({
     bgcolor: "#F8F9FA",
     color: "#7b809a",
     borderBottom: "2px solid #ddd",
-    padding: "10px 16px"
+    padding: "10px 16px",
   };
 
   const cellStyle = {
     padding: "8px 16px",
     fontSize: "13.5px",
-    borderBottom: "1px solid #f0f2f5"
+    borderBottom: "1px solid #f0f2f5",
   };
 
   const TableContent = (
     <Box>
       {/* Top Toolbar */}
       {renderTopToolBar && (
-        <Box sx={{ 
-          display: "flex", 
-          flexDirection: { xs: "column", sm: "row" }, 
-          justifyContent: "space-between", 
-          alignItems: { xs: "stretch", sm: "center" }, 
-          gap: 2, 
-          pb: 3, 
-          pt: wrapInCard ? 0 : 2 
-        }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            alignItems: { xs: "stretch", sm: "center" },
+            gap: 2,
+            pb: 3,
+            pt: wrapInCard ? 0 : 2,
+          }}
+        >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <MDTypography variant="h6" fontWeight="bold" sx={{ color: "#344767" }}>
+            <MDTypography
+              variant="h6"
+              fontWeight="bold"
+              sx={{ color: "#344767" }}
+            >
               {title}
             </MDTypography>
             {onUpdate && (
               <Tooltip title="Refresh Server Data">
-                <IconButton onClick={onUpdate} size="small" sx={{ ml: 1, color: "#344767" }}>
+                <IconButton
+                  onClick={onUpdate}
+                  size="small"
+                  sx={{ ml: 1, color: "#344767" }}
+                >
                   <LoopIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
             )}
             {enableDownload && (
               <Tooltip title="Export to CSV">
-                <IconButton onClick={handleExportClick} size="small" sx={{ ml: 1, color: "#344767" }}>
+                <IconButton
+                  onClick={handleExportClick}
+                  size="small"
+                  sx={{ ml: 1, color: "#344767" }}
+                >
                   <DownloadIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
             )}
           </Box>
 
-          <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 1.5 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              gap: 1.5,
+            }}
+          >
             {/* Search Filter for Server Simulation */}
             {manualFiltering && setColumnFilters && (
               <MDInput
@@ -168,7 +200,7 @@ export const MDManualTable = <T extends { id: string | number }>({
                 value={columnFilters}
                 onChange={(e: any) => {
                   setColumnFilters(e.target.value);
-                  setPagination(prev => ({ ...prev, pageIndex: 0 })); // reset index
+                  setPagination((prev) => ({ ...prev, pageIndex: 0 })); // reset index
                 }}
                 sx={{ width: { xs: "100%", sm: "200px" } }}
                 slotProps={{
@@ -177,15 +209,19 @@ export const MDManualTable = <T extends { id: string | number }>({
                       <InputAdornment position="start">
                         <SearchIcon fontSize="small" />
                       </InputAdornment>
-                    )
-                  }
+                    ),
+                  },
                 }}
               />
             )}
 
             {/* Column Hide/Show Option */}
             <Tooltip title="Show/Hide Columns">
-              <IconButton onClick={(e) => setColAnchorEl(e.currentTarget)} size="small" sx={{ color: "#344767" }}>
+              <IconButton
+                onClick={(e) => setColAnchorEl(e.currentTarget)}
+                size="small"
+                sx={{ color: "#344767" }}
+              >
                 <ViewColumnIcon fontSize="small" />
               </IconButton>
             </Tooltip>
@@ -195,14 +231,16 @@ export const MDManualTable = <T extends { id: string | number }>({
               onClose={() => setColAnchorEl(null)}
               slotProps={{
                 paper: {
-                  style: { maxHeight: 300, width: "200px" }
-                }
+                  style: { maxHeight: 300, width: "200px" },
+                },
               }}
             >
               <Box sx={{ px: 2, py: 1 }}>
-                <MDTypography variant="caption" fontWeight="bold">Columns Visibility</MDTypography>
+                <MDTypography variant="caption" fontWeight="bold">
+                  Columns Visibility
+                </MDTypography>
               </Box>
-              {columns.map(col => {
+              {columns.map((col) => {
                 const key = String(col.accessorKey);
                 return (
                   <MenuItem key={key} dense>
@@ -229,11 +267,13 @@ export const MDManualTable = <T extends { id: string | number }>({
       {loading ? (
         <MDLoader />
       ) : (
-        <TableContainer sx={{ border: "1px solid #f0f2f5", borderRadius: "8px" }}>
+        <TableContainer
+          sx={{ border: "1px solid #f0f2f5", borderRadius: "8px" }}
+        >
           <Table stickyHeader size="small">
             <TableHead>
               <TableRow>
-                {columns.map(col => {
+                {columns.map((col) => {
                   const key = String(col.accessorKey);
                   if (columnVisibility[key] === false) return null;
                   return (
@@ -247,7 +287,11 @@ export const MDManualTable = <T extends { id: string | number }>({
             <TableBody>
               {data.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={columns.length} align="center" sx={{ py: 6 }}>
+                  <TableCell
+                    colSpan={columns.length}
+                    align="center"
+                    sx={{ py: 6 }}
+                  >
                     <MDTypography variant="subtitle2" color="textSecondary">
                       No records returned from back-end server.
                     </MDTypography>
@@ -267,19 +311,17 @@ export const MDManualTable = <T extends { id: string | number }>({
                       }}
                       sx={{ cursor: isRowClickable ? "pointer" : "default" }}
                     >
-                      {columns.map(col => {
+                      {columns.map((col) => {
                         const key = String(col.accessorKey);
                         if (columnVisibility[key] === false) return null;
                         return (
                           <TableCell key={key} sx={cellStyle}>
-                            {col.cell ? (
-                              col.cell({
-                                getValue: () => (row as any)[key],
-                                row: { original: row }
-                              })
-                            ) : (
-                              String((row as any)[key] || "")
-                            )}
+                            {col.cell
+                              ? col.cell({
+                                  getValue: () => (row as any)[key],
+                                  row: { original: row },
+                                })
+                              : String((row as any)[key] || "")}
                           </TableCell>
                         );
                       })}
@@ -300,7 +342,7 @@ export const MDManualTable = <T extends { id: string | number }>({
           justifyContent: "space-between",
           alignItems: "center",
           pt: 2.5,
-          pb: wrapInCard ? 0 : 2
+          pb: wrapInCard ? 0 : 2,
         }}
       >
         <MDBox sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -313,30 +355,41 @@ export const MDManualTable = <T extends { id: string | number }>({
               backgroundColor: "#FFF",
               outline: "none",
               cursor: "pointer",
-              fontSize: "13px"
+              fontSize: "13px",
             }}
             onChange={(e) => {
               const newSize = Number(e.target.value);
               setPagination({ pageIndex: 0, pageSize: newSize });
             }}
           >
-            {rowsPerPageOptions.map(opt => (
-              <option key={opt} value={opt}>{opt}</option>
+            {rowsPerPageOptions.map((opt) => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
             ))}
           </select>
           <MDTypography variant="caption" color="textSecondary">
             {(() => {
-              const start = data.length === 0 ? 0 : pagination.pageIndex * pagination.pageSize + 1;
-              const end = pagination.pageIndex * pagination.pageSize + data.length;
+              const start =
+                data.length === 0
+                  ? 0
+                  : pagination.pageIndex * pagination.pageSize + 1;
+              const end =
+                pagination.pageIndex * pagination.pageSize + data.length;
               const totalStr = totalItems >= 0 ? `of ${totalItems}` : "";
-              return `Showing ${start} to ${end} ${totalStr} (Server Index: ${pagination.pageIndex})`;
+              return `Showing ${start} to ${end} ${totalStr}  `;
             })()}
           </MDTypography>
         </MDBox>
 
         <MDBox sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <MDPagination
-            onClick={() => setPagination(prev => ({ ...prev, pageIndex: prev.pageIndex - 1 }))}
+            onClick={() =>
+              setPagination((prev) => ({
+                ...prev,
+                pageIndex: prev.pageIndex - 1,
+              }))
+            }
             disabled={pagination.pageIndex === 0 || loading}
             title="Previous Page"
           >
@@ -350,7 +403,12 @@ export const MDManualTable = <T extends { id: string | number }>({
           </Box>
 
           <MDPagination
-            onClick={() => setPagination(prev => ({ ...prev, pageIndex: prev.pageIndex + 1 }))}
+            onClick={() =>
+              setPagination((prev) => ({
+                ...prev,
+                pageIndex: prev.pageIndex + 1,
+              }))
+            }
             disabled={!hasMoreData || loading}
             title="Next Page"
           >
@@ -361,7 +419,19 @@ export const MDManualTable = <T extends { id: string | number }>({
     </Box>
   );
 
-  return wrapInCard ? <Card sx={{ p: 2, boxShadow: "0 4px 20px 0 rgba(0,0,0,0.05)", borderRadius: "12px" }}>{TableContent}</Card> : TableContent;
+  return wrapInCard ? (
+    <Card
+      sx={{
+        p: 2,
+        boxShadow: "0 4px 20px 0 rgba(0,0,0,0.05)",
+        borderRadius: "12px",
+      }}
+    >
+      {TableContent}
+    </Card>
+  ) : (
+    TableContent
+  );
 };
 
 export default MDManualTable;
