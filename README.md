@@ -10,57 +10,43 @@ This codebase is crafted using the structural principles of high-performance use
 
 The system is split cleanly into a **Vite Client-Side Core (Micro-Component SPA)** and an **Express Backend API Service Engine**.
 
-src/
-├── backend/
-│ ├── LocalStorage.ts
-│ └── apiService.ts
-│
-├── components/
-│
-│ ├── Dashboard/
-│ │ ├── index.tsx
-│ │ ├── DashboardHeader.tsx
-│ │ ├── DashboardStats.tsx
-│ │ └── DashboardTabs.tsx
-│ │
-│ ├── MDAutomaticTable/
-│ │ └── index.tsx
-│ │
-│ ├── MDManualTable/
-│ │ └── index.tsx
-│ │
-│ ├── MDStatsCard/
-│ │ └── index.tsx
-│ │
-│ ├── MDBox/
-│ │ └── index.tsx
-│ │
-│ ├── MDButton/
-│ │ └── index.tsx
-│ │
-│ ├── MDInput/
-│ │ └── index.tsx
-│ │
-│ ├── MDLoader/
-│ │ └── index.tsx
-│ │
-│ ├── MDTypography/
-│ │ └── index.tsx
-│ │
-│ └── MDAlert/
-│ └── index.tsx
-│
-├── hooks/
-│ └── usePaginatedItems.ts
-│
-├── utils/
-│ ├── constants.ts
-│ └── exportCsv.ts
-│
-├── types.ts
-├── App.tsx
-├── main.tsx
-└── index.css
+```text
+├── server/                          # Decoupled Node.js Enterprise API Server
+│   ├── database/
+│   │   └── store.ts                 # InMemory thread-safe Transactional Store
+│   ├── routes/
+│   │   └── api.ts                   # Modular Controller handling API endpoints
+│   ├── services/
+│   │   └── itemService.ts           # Business Logic layer & Seeding engine
+│   ├── types/
+│   │   └── index.ts                 # Server-side Shared Type declarations
+│   └── utils/
+│       └── logger.ts                # Structured JSON logging powered by Pino
+├── server.ts                        # MUIExpress Entrypoint & Vite HMR Middleware
+├── src/                             # Client-Side SPA (Vite + TS)
+│   ├── backend/
+│   │   └── LocalStorage.ts          # Browser persistence utilities
+│   ├── components/
+│   │   ├── MDAutomaticTable/        # In-Memory Fast High-Density Datatable
+│   │   ├── MDManualTable/           # Cursor-Based Server Pagination Datatable
+│   │   ├── MDStatsCard/             # Metric indicators displaying server stats
+│   │   ├── MDBox/                   # Layout Box wrapping configurations
+│   │   ├── MDButton/                # Theme-bounded Buttons
+│   │   ├── MDInput/                 # Standard Form Input elements
+│   │   ├── MDLoader/                # Central Overlay Loader Skeletons
+│   │   └── MDTypography/            # Typography system implementing design keys
+│   ├── hooks/
+│   │   └── usePaginatedItems.ts     # TanStack Query custom navigation machine hook
+│   ├── utils/
+│   │   ├── constants.ts             # Grid settings & table measurements
+│   │   └── exportCsv.ts             # Binary blob parser for CSV processing
+│   ├── App.tsx                      # Primary Dashboard view (Smart Hub Container)
+│   ├── index.css                    # Global styling & Tailwind directives
+│   ├── types.ts                     # UI Common Types & Props structures
+│   └── main.tsx                     # React client bootstrap loader
+├── tsconfig.json                    # Compiler settings (Strict Safety)
+└── package.json                     # Dependency scripts and production commands
+```
 
 ---
 
@@ -200,8 +186,3 @@ _Data Seeding Strategy:_ During bootup, the system runs an asynchronous fetch to
   npm run start
   ```
 
----
-
-## 🛡️ License
-
-Designed for high performance and clean micro-services under the standard **Apache-2.0** verification logic.
